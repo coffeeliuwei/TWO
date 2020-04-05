@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>  用户登录 </title>
+		
+		<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		
+		<style>
+			.row img{
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		
+		<div class='row'>
+			<a href='index.html'> 首页 </a>  >> 用户登录
+		</div>
+		
+		<div class='row' style='margin-top: 100px;'>
+			<div class='row'>
+				用户登录
+			</div>
+			<div class='row'>
+				<img src='../image/user.png'/>
+				<input type='text' class='username' placeholder='用户名' >
+			</div>
+			<div class='row'>
+				<img src='../image/password.png'/>
+				<input type='password' class='password' placeholder='密码' >
+			</div>
+				
+			<div> 
+				<button onclick='M.login()' style='margin-top: 20px'> 登录 </button>
+				&nbsp;&nbsp; <a href='register.html'> 注册新用户 </a>
+			</div>
+
+			
+		</div>
+		
+		<div class='bottom' style='margin-top: 100px'>
+			论坛项目
+		</div>	
+		
+	</div></body>
+	
+	<script>
+		var M = {};
+		
+		// 注册
+		M.login = function()
+		{
+			var req = {};
+			req.username = $('.username').val().trim();
+			req.password = $('.password').val().trim();
+			
+			LW.rest('UserLogin.do', req, function(data){
+				location.href = 'index.html'
+			})
+		}
+		
+		
+		
+	</script>
+</html>

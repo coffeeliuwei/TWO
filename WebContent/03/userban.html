@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 论坛 | 管理后台  </title>
+		
+		<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		
+		<style>
+			.content .item-list{
+				min-height: 240px;
+			}
+			.content .item{
+				display: block;	
+				padding: 10px;
+			}
+			.content .item:hover{
+				background-color: #F4F4F4;
+			}
+			.content .item img{
+				vertical-align: middle;
+				max-width: 150px;
+				max-height: 150px;	
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		<div class='top'>
+			论坛 | 管理后台
+		</div>
+	
+		<div class='row'>
+			<a href='index.html'> 管理后台 </a>  >> 用户禁言
+		</div>
+		
+		<div class='content' style='margin-top: 50px'>
+			<div class='row'>
+				<label> 用户:  </label>
+				<span class='user'> </span>
+			</div>
+			
+			<div class='row'>
+				<input type='checkbox' class='canRead'> 浏览权限
+			</div>
+			
+			<div class='row'>
+				<input type='checkbox' class='canPost'> 发帖权限
+			</div>
+
+			<div class='row'>
+				<input type='checkbox' class='canReply'> 回复权限
+			</div>
+			
+			<div> 
+				<button class='primary' onclick='M.update()' style='margin-top: 20px'> 保存设置 </button>
+			</div>	
+			
+		</div>		
+		
+		<div class='bottom' style='margin-top: 100px'>
+			论坛 | 管理后台
+		</div>	
+				
+	</div></body>
+	
+	<script>
+		var M = {};
+		M.user = LW.getUrlParam('user', '0'); // 从URL中获取参数
+		
+		/* 查询此用户的信息 */
+		M.query = function()
+		{			
+			var req = {};
+			req.id = M.user;
+			LW.rest('AdminUserGet.do', req, function(data){
+				M.showUser(data);				
+			})
+		}
+		
+		/* 显示用户信息 */
+		M.showUser = function( user )
+		{
+			$('.user').html ( user.username);
+			$('.canRead').prop('checked', user.canRead);
+			$('.canPost').prop('checked', user.canPost);
+			$('.canReply').prop('checked', user.canReply);
+		}
+		
+		/* 保存用户设置 */
+		M.update = function()
+		{
+			var req = {};
+			req.id = M.user;
+			req.canRead = $('.canRead').prop('checked');
+			req.canPost = $('.canPost').prop('checked');
+			req.canReply = $('.canReply').prop('checked');
+			LW.rest('AdminUserSet.do', req, function(data){
+				alert('成功');
+			})
+		}
+		
+		// 初始化执行
+		M.init = function(){
+			
+			M.query();
+			
+		}();
+		
+	</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>  发贴  </title>
+		
+		<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		<script type="text/javascript" src="../UserInfoJson" ></script>
+		
+		<script>
+			
+			if(user == null) location.href ='login.html' ;
+			
+		</script>
+	</head>
+	<body>
+	<div class='container'>
+		
+		<div class='row'>
+			<a href='index.html'> 首页 </a>  >> 发贴
+		</div>
+		
+		<div class='row' style='margin-top: 20px;'>
+			<div class='row'>
+				<input type='text' class='title' placeholder='输入标题' style='width:100%'>
+			</div>
+			
+			<div class='row'>
+				<textarea class='content' style='width:100%' placeholder='输入内容'></textarea>
+			</div>
+			
+			<div class='row'  style='margin-top: 20px'> 
+				<button class='post primary' onclick='M.save()'> 发表 </button>
+			</div>
+			
+		</div>
+		
+		
+		<div class='bottom' style='margin-top: 100px'>
+			论坛项目
+		</div>	
+		
+	</div></body>
+	
+	<script>
+		var M = {};
+		
+		// 保存
+		M.save = function()
+		{
+			var req = {};
+			req.title = $('.title').val().trim();
+			req.content = $('.content').val();
+			
+			// 检查输入 的有效性
+			if(req.title.length == 0){ alert('请填写标题'); return }
+			if(req.content.length == 0){ alert('请填写内容'); return }
+			
+			// 提交至后台
+			LW.rest('bbsAdd.do', req, function(data){
+				location.href = 'index.html';
+			})
+		}
+		
+		M.init = function(){
+			
+			
+			if( ! user.canPost )
+			{
+				var btn = $('button.post');
+				btn.attr('disabled',true);
+				btn.html('禁言中、不能发贴');
+				btn.css('cursor', 'not-allowed');
+			}
+			
+		}();
+		
+	</script>
+</html>

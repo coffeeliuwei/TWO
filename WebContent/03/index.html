@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 论坛 | 管理后台  </title>
+		
+		<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		<script type="text/javascript" src="../AdminInfoJS" ></script>
+		
+		<script>
+			// 登录检查
+			if(admin == null) location.href ='login.html';
+		</script>
+		
+		<style>
+			.content .item-list{
+				min-height: 240px;
+			}
+			.content .item{
+				display: block;	
+				padding: 10px;
+			}
+			.content .item:hover{
+				background-color: #F4F4F4;
+			}
+			.content .item img{
+				vertical-align: middle;
+				max-width: 150px;
+				max-height: 150px;	
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		<div class='top'>
+			论坛 | 管理后台
+		</div>
+
+		<div class='row'>
+			<label> 当前管理员: </label>
+			<span class='admin'></span>
+			<a href='javascript:void(0)' onclick='M.logout()'> 退出登录</a>
+		</div>
+		
+		<div class='content' style='margin-top: 50px'>
+			<div class='heading'> 最新 </div>
+			<div class='item-list'></div>
+		</div>
+		
+		
+		<div class='bottom' style='margin-top: 100px'>
+			论坛 | 管理后台
+		</div>	
+				
+	</div></body>
+	
+	<script>
+		var M = {};
+		
+		$('.admin').html(admin.username);
+	
+		// 退出登录
+		M.logout = function()
+		{
+			var req = {};
+			LW.rest('AdminLogout.do', req, function(){
+				location.href = 'login.html' ; // 跳到登录页
+			})
+		}
+		
+		// 查询帖子列表
+		M.query = function()
+		{
+			var req = {};
+			LW.rest('AdminBBSQuery.do', req, function(data){
+				M.showItemList (data);
+			})
+		}
+		
+		M.showItemList = function( items )
+		{
+			var target = $('.item-list');
+			target.html('');
+			for(var i=0;i<items.length; i++)
+			{
+				var it = items[i];
+				// 拼凑一段HTML
+				var str = "<div class='item' iid='##1'>"
+					+ "##2 <br>"
+					+ "##3 ##4"
+					+ "<a href='userban.html?user=##5'> 禁言 </a>"
+					+ "</div>"
+					;
+				// 正则替换, 将##1字样替换为 it.id值
+				str = str.replace(/##1/g, it.id)
+					.replace(/##2/g, it.title)
+					.replace(/##3/g, it.username)
+					.replace(/##4/g, it.timeCreated)
+					.replace(/##5/g, it.userId)
+					;
+				// 更新显示
+				target.append( str );
+			}
+		}
+		
+		// 初始化执行
+		M.init = function(){
+			
+			M.query();
+			
+		}();
+		
+	</script>
+</html>

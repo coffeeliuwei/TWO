@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- 示例
+	<service name="Hello" class="com.coffee.HelloDo" /> 
+	<upload name="FileUpload" class="com.coffee.Uploader" /> 
+	-->
+	
+	<!-- FileUpload.up
+	<upload name="FileUpload" class="com.coffee.servlet.Uploader" />
+	 -->
+	<service name="UserRegister" class="com.coffee.user.UserRegisterDo" />
+	<service name="UserLogin" class="com.coffee.user.UserLoginDo" />
+	<service name="UserLogout" class="com.coffee.user.UserLogoutDo" />
+	
+	<!-- 帖子 -->
+	<service name="bbsAdd" class="com.coffee.bbs.bbsAddDo" />
+	<service name="bbsQuery" class="com.coffee.bbs.bbsQueryDo" />
+	<!-- <service name="bbs2Query" class="com.coffee.bbs.bbs2QueryDo" /> -->
+	
+	<!-- 帖子 Admin: 管理员界面 -->
+	<service name="AdminBBSQuery" class="com.coffee.admin.bbs.AdminBBSQueryDo" />
+		
+	<!-- 用户  -->
+	<service name="AdminUserGet" class="com.coffee.admin.user.AdminUserGetDo" />
+	<service name="AdminUserSet" class="com.coffee.admin.user.AdminUserSetDo" />
+	
+	<!-- 管理员登录  -->
+	<service name="AdminLogin" class="com.coffee.admin.login.AdminLoginDo" />
+	<service name="AdminLogout" class="com.coffee.admin.login.AdminLogoutDo" />
+</config>

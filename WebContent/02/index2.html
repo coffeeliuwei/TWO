@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 论坛首页 </title>
+		<!-- freemark测试 http://localhost:8080/TWO/bbs2Query -->
+<link rel="stylesheet" href="css/common.css" />
+		<script type="text/javascript" src="js/jquery.js" ></script>
+		<script type="text/javascript" src="js/lwquery.js" ></script>
+		<script type="text/javascript" src="UserInfoJson" ></script>
+		
+		<style>
+			.content .item-list{
+				min-height: 240px;
+			}
+			.content .item{
+				display: block;	
+				padding: 10px;
+			}
+			.content .item:hover{
+				background-color: #f19f63;
+			}
+			.content .item img{
+				vertical-align: middle;
+				max-width: 150px;
+				max-height: 150px;	
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		<div class='top'>
+			BBS
+		</div>
+	
+		<div style='margin: 18px 0';> 
+			你好, <span class='user'></span>					
+		</div>
+
+		<div style='margin: 18px 0';> 
+			<a class='btn' href='02/edit.html'> 发贴 </a>
+		</div>		
+		
+		<div class='content' style='margin-top: 50px'>
+			<div class='heading'> 最新 </div>
+			<div class='item-list'>
+			
+			<#list bbs as it>
+				<div class='item' id=${it.id}>
+					${it.title}<br>  
+					${it.username}+${it.timeCreated}
+				</div>
+			</#list>
+
+			</div>
+		</div>
+		
+		<div class='bottom' style='margin-top: 100px'>
+			 论坛项目
+		</div>	
+		
+	</div></body>
+	
+	<script>
+	//	if(typeof user=='undefined')
+	//	{
+	//	$('.user').html("<a href='login.html'>请登录</a>");
+	//	}
+		// 用户登录检查
+	//	else 
+		if(user == null)
+		{
+			$('.user').html("<a href='02/login.html'>请登录</a>");
+		}
+		else
+		{
+			var str = user.username 
+				+ "&nbsp;&nbsp; "
+				+ "<a href='javascript:void(0)' onclick='M.logout()'> 退出登录 </a> ";
+			$('.user').html( str);
+		}
+		
+		var M = {};
+		
+		// 退出登录
+		M.logout = function()
+		{
+			var req = {};
+			LW.rest('UserLogout.do', req, function(){
+				location.href = '02/index2.html' ; // 刷新本页
+			})
+		}
+
+		// 查询帖子列表
+		M.query = function()
+		{
+			var req = {};
+			LW.rest('../bbs2Query', req, function(){
+				location.href = '02/index2.html' ; // 刷新本页
+			})
+		}
+
+		// 初始化执行
+		M.init = function(){
+			
+			M.query();
+			
+		}();
+		
+	</script>
+</html>

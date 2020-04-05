@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>  用户注册 </title>
+		
+		<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		
+		<style>
+			.row img{
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		
+		<div class='row'>
+			<a href='index.html'> 首页 </a>  >> 用户注册
+		</div>
+		
+		<div class='row' style='margin-top: 100px;'>
+			<div class='row'>
+				输入你的信息：
+			</div>
+			<div class='row'>
+				<img src='../image/user.png'/>
+				<input type='text' class='username' placeholder='用户名' >
+			</div>
+			<div class='row'>
+				<img src='../image/password.png'/>
+				<input type='password' class='password' placeholder='密码' >
+			</div>
+			<div class='row'>
+				<img style='width:20px'/>
+				<input type='password' class='password2' placeholder='确认确码'>
+			</div>			
+			<div> 
+				<button onclick='M.register()' style='margin-top: 20px'> 注册 </button>
+			</div>
+		</div>
+		
+		<div class='bottom' style='margin-top: 100px'>
+			论坛项目
+		</div>	
+		
+	</div></body>
+	
+	<script>
+		var M = {};
+		
+		// 注册
+		M.register = function()
+		{
+			var req = {};
+			req.username = $('.username').val().trim();
+			req.password = $('.password').val().trim();
+			var password2 = $('.password2').val().trim();
+			
+			if(req.password != password2){ alert('密码不一致!'); return }
+			
+			Af.rest('UserRegister.do', req, function(data){
+				location.href = 'index.html'
+			})
+		}
+	</script>
+</html>

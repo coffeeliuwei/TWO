@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 论坛首页 </title>
+		
+<link rel="stylesheet" href="../css/common.css" />
+		<script type="text/javascript" src="../js/jquery.js" ></script>
+		<script type="text/javascript" src="../js/lwquery.js" ></script>
+		<script type="text/javascript" src="../UserInfoJson" ></script>
+		
+		<style>
+			.content .item-list{
+				min-height: 240px;
+			}
+			.content .item{
+				display: inline-block;	
+			}
+			.content .item:hover{
+				background-color: #f19f63;
+			}
+			.content .item img{
+				vertical-align: middle;
+				max-width: 150px;
+				max-height: 150px;	
+				margin: 5px;
+			}
+		</style>
+	</head>
+	<body>
+	<div class='container'>
+		<div class='top'>
+			BBS
+		</div>
+	
+		<div style='margin: 18px 0';> 
+			你好, <span class='user'></span>					
+		</div>
+		
+		<div class='content' style='margin-top: 50px'>
+		</div>
+		
+		<div class='bottom' style='margin-top: 100px'>
+			 论坛项目
+		</div>	
+		
+	</div></body>
+	
+	<script>
+	//	if(typeof user=='undefined')
+	//	{
+	//	$('.user').html("<a href='login.html'>请登录</a>");
+	//	}
+		// 用户登录检查
+	//	else 
+		if(user == null)
+		{
+			$('.user').html("<a href='login.html'>请登录</a>");
+		}
+		else
+		{
+			var str = user.username 
+				+ "&nbsp;&nbsp; "
+				+ "<a href='javascript:void(0)' onclick='M.logout()'> 退出登录 </a> ";
+			$('.user').html( str);
+		}
+		
+		var M = {};
+		
+		// 退出登录
+		M.logout = function()
+		{
+			var req = {};
+			LW.rest('UserLogout.do', req, function(){
+				location.href = 'index.html' ; // 刷新本页
+			})
+		}
+		
+	</script>
+</html>
